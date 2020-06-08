@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+  h2 Books
+  p
+    form(action=`/books/search/`  method='POST')
+        input#search-input.search-input(type='search' name="search" placeholder='Search...' required)
+        input#search-submit.search-submit(type='submit' value='🔍')
+    br
+    p
+      a.button(href="/books") Show All Books
+    p
+      a.button(href="/books/new") Create New Book
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+      each book in books
+        tr
+          td
+            a(href="/books/" + book.id) #{book.title}
+          td #{book.author}
+          td #{book.genre}
+          td #{book.year}
+      - var n = 1
+  p 
+    while n < pages +1
+      a(class="pagination" href="/books/pag/" + n)= n++
+      ||
+    p Pages
+
+    

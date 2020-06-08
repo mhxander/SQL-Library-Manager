@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1 Create a New Book
+
+  include errors
+
+  form(method='post' action='/books/new')
+    p
+      label(for="title") Title
+      input(name="title", type="text", id="title", value=book ? book.title : "")
+    p
+      label(for="author") Author
+      input(name="author", type="text", id="author", value=book ? book.author : "")
+    p
+      label(for="genre") Genre
+      input(name="genre", type="text", id="genre", value=book ? book.genre : "")
+    p
+      label(for="year") Year
+      input(name="year", type="text", id="year", value=book ? book.year : "")
+    input(type='submit' value='Create New Book')
+    a.button(href='/books') Cancel 
+    
