@@ -17,29 +17,29 @@ function asyncHandler(cb){
 //Search functionality
 router.post('/search', asyncHandler(async(req,res) => {
   search = true;
-  const searchBooks = await Book.findAll({
+  const books = await Book.findAll({
     where: {
       [Op.or]: {
         title: 
         {
-          [Op.like]: `%${req.body.query}%`
+          [Op.like]: `%${req.body.search}%`
         },
         author:
         {
-          [Op.like]: `%${req.body.query}%`
+          [Op.like]: `%${req.body.search}%`
         },
         genre:
         {
-          [Op.like]: `%${req.body.query}%`
+          [Op.like]: `%${req.body.search}%`
         },
         year:
         {
-          [Op.like]: `%${req.body.query}%`
+          [Op.like]: `%${req.body.search}%`
         }
       }
     }
   });
-  await res.render('book/index', {searchBooks});
+  res.render('book/index', {books});
 }))
 
 //GET FULL BOOK LISTING, WITH PAGINATION.
