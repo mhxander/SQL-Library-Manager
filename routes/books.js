@@ -9,7 +9,7 @@ function asyncHandler(cb){
     try {
       await cb(req, res, next)
     } catch(error){
-      res.status(500).send(error);
+      return next(error);
     }
   }
 }
@@ -83,7 +83,8 @@ router.post('/new', asyncHandler(async (req, res) => {
       book = await Book.build(req.body);
       res.render("book/new-book", { book, errors: error.errors })
     } else {
-      throw error; // error caught in the asyncHandler's catch block
+      error.status(500);
+      throw error;
     }  
   }
 }));
@@ -96,7 +97,7 @@ router.get('/:id', asyncHandler(async(req, res)=>{
   if(book){
     res.render('book/update-book', {book})
   } else {
-    res.render('book/book-notfound');
+    throw error;
   }
 }));
 
@@ -109,7 +110,8 @@ router.post('/:id/edit', asyncHandler(async (req, res) => {
       await book.update(req.body);
       res.redirect("/books"); 
     } else {
-      res.render('book/book-notfound');
+      res.status(405);
+      throw error;
     }
   } catch (error) {
     if(error.name === "SequelizeValidationError") {
