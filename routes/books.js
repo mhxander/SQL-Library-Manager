@@ -102,7 +102,7 @@ router.get('/:id', asyncHandler(async(req, res)=>{
 }));
 
 /* Update the books info. */
-router.post('/:id/edit', asyncHandler(async (req, res) => {
+router.post('/:id', asyncHandler(async (req, res) => {
   let book;
   try {
     book = await Book.findByPk(req.params.id);
